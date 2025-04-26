@@ -52,3 +52,125 @@
 * Github oraz Git do zarządzania projektem.
 ### __Wsparcie__: 
 * Gra będzie wspierała jedynie środowisko __Windows__ oraz język __Polski__.
+
+## Diagram UML
+
+```mermaid
+classDiagram
+%% --- Bazowe klasy Godot ---
+class Node
+class CanvasItem
+CanvasItem --|> Node
+class Control
+Control --|> CanvasItem
+class Texture2D
+class InputEvent
+class InputEventKey
+class InputEventMouseButton
+class Resource
+
+%% --- Komponenty gry ---
+class Player {
+  - Array~Card~ hand
+  - int fearLevel
+  + void draw_card()
+  + void play_card(card: Card, target: Monster)
+  + void increase_fear(amount: int)
+  + int get_fear_level()
+}
+
+class Card {
+  - String card_name
+  - String description
+  + void use(player: Player, target: Monster)
+}
+Card --|> Resource
+
+class SkillCard {
+  - String effect
+  + void use(player: Player, target: Monster)
+}
+SkillCard --|> Card
+
+class Monster {
+  - String monster_name
+  - int health
+  - int attack
+  - String special_ability
+  + void attack_player(player: Player)
+  + void take_damage(damage: int)
+  + int get_health()
+}
+
+class MonsterType {
+  <<enumeration>>
+  NOSFERATU
+  BABA_JAGA
+  DRACULA
+}
+
+class CardManager {
+  - Array~Card~ deck
+  - Array~Card~ discard_pile
+  + void shuffle_deck()
+  + Card draw_card()
+  + void discard_card(card: Card)
+}
+CardManager --|> Node
+
+class BattleManager {
+  - Player current_player
+  - Array~Monster~ current_monsters
+  + void start_battle(player: Player, monsters: Array~Monster~)
+  + void player_turn(card: Card, target: Monster)
+  + void monster_turn()
+  + bool is_battle_over()
+}
+BattleManager --|> Node
+
+class InterfaceManager {
+  + void display_player_hand(hand: Array~Card~)
+  + void display_monsters(monsters: Array~Monster~)
+  + void display_fear_level(fear_level: int)
+  + void display_battle_log(message: String)
+}
+InterfaceManager --|> Control
+
+class InputController {
+  + signal action_triggered(action_name: String)
+  + void _input(event: InputEvent)
+}
+InputController --|> Node
+
+class GameAction {
+  <<enumeration>>
+  PLAY_CARD
+  SELECT_TARGET
+  END_TURN
+}
+
+class GraphicsManager {
+  + Texture2D load_card_texture(card: Card)
+  + Texture2D load_monster_texture(monster: Monster)
+  + void draw_card(card: Card, position: Vector2)
+  + void draw_monster(monster: Monster, position: Vector2)
+  + void draw_ui(interface_manager: InterfaceManager, player: Player, battle_manager: BattleManager)
+}
+GraphicsManager --|> Node
+
+%% --- Relacje pomiędzy klasami ---
+Player --* Card : posiada
+CardManager --* Card : zarządza
+BattleManager --* Player : zarządza
+BattleManager --* Monster : zarządza
+BattleManager --> CardManager : używa
+InterfaceManager --> Player : wyświetla informacje o
+InterfaceManager --> BattleManager : wyświetla informacje o
+InputController --> GameAction : emituje
+GraphicsManager --> Card : renderuje
+GraphicsManager --> Monster : renderuje
+GraphicsManager --> InterfaceManager : renderuje
+Player "1" --> "1..*" BattleManager : uczestniczy w
+Monster "1..*" --> "1" BattleManager : uczestniczy w
+Monster --> MonsterType
+```
