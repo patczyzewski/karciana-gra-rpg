@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://bs07oxm8m6uk"]
+
+[ext_resource type="Script" uid="uid://dg8gipalw4ual" path="res://Code/Player.cs" id="1_cvnsp"]
+[ext_resource type="Texture2D" uid="uid://btk2xp4lducn7" path="res://Assets/Art/Folklore Terror Player.png" id="2_6t5aa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgqql"]
+atlas = ExtResource("2_6t5aa")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fkybt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgqql")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x3wgy"]
+radius = 5.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_cvnsp")
+Gravity = 500.0
+
+[node name="Animations" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fkybt")
+animation = &"idle"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 9)
+shape = SubResource("CapsuleShape2D_x3wgy")

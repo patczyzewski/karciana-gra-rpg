@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq2xx2cg0weyq"]
+
+[ext_resource type="Texture2D" uid="uid://p3ogral4r53s" path="res://Assets/Art/Folklore Terror Skinwalker.png" id="1_vxhts"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h0b4i"]
+atlas = ExtResource("1_vxhts")
+region = Rect2(0, 0, 96, 112)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ity8y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h0b4i")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[node name="Skinwalker" type="Node2D"]
+
+[node name="Animations" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ity8y")
+animation = &"Idle"
