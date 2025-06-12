@@ -1,0 +1,85 @@
+[gd_scene load_steps=6 format=3 uid="uid://g4wu7c1vbb7b"]
+
+[ext_resource type="Script" uid="uid://c6txm88lmggqu" path="res://Code/EnemyHealthBar.cs" id="1_em3n5"]
+[ext_resource type="Texture2D" uid="uid://defjknk804bgm" path="res://Assets/Art/Folklore Terror UI Elements.png" id="1_xibhk"]
+[ext_resource type="FontFile" uid="uid://dtk58g2lcjwjy" path="res://Assets/Fonts/PixelOperator8.ttf" id="2_3wq5k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wq5k"]
+atlas = ExtResource("1_xibhk")
+region = Rect2(48, 80, 176, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_em3n5"]
+atlas = ExtResource("1_xibhk")
+region = Rect2(48, 113, 16, 16)
+
+[node name="EnemyHealthBar" type="Node2D"]
+script = ExtResource("1_em3n5")
+
+[node name="HealthBar" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_3wq5k")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -49.0
+offset_top = -7.0
+offset_right = 147.0
+offset_bottom = 9.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/default_color = Color(0.233915, 0.076001, 0.183848, 1)
+theme_override_colors/font_shadow_color = Color(0.470588, 0.176471, 0.282353, 1)
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/normal_font = ExtResource("2_3wq5k")
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LifeCell 1" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-64, 9)
+texture = SubResource("AtlasTexture_em3n5")
+
+[node name="LifeCell 2" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-48, 9)
+texture = SubResource("AtlasTexture_em3n5")
+
+[node name="LifeCell 3" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-32, 9)
+texture = SubResource("AtlasTexture_em3n5")
+
+[node name="LifeCell 4" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-16, 9)
+texture = SubResource("AtlasTexture_em3n5")
+
+[node name="LifeCell 5" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, 9)
+texture = SubResource("AtlasTexture_em3n5")
+
+[node name="LifeCell 6" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(16, 9)
+texture = SubResource("AtlasTexture_em3n5")
+
+[node name="LifeCell 7" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(32, 9)
+texture = SubResource("AtlasTexture_em3n5")
+
+[node name="LifeCell 8" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(48, 9)
+texture = SubResource("AtlasTexture_em3n5")
+
+[node name="LifeCell 9" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(64, 9)
+texture = SubResource("AtlasTexture_em3n5")
+
+[node name="LifeCell 10" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(80, 9)
+texture = SubResource("AtlasTexture_em3n5")

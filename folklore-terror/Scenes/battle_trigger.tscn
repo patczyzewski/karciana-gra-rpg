@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://37t3ylxcmqel"]
+
+[ext_resource type="Script" uid="uid://ddiddxvr2uybq" path="res://Code/BattleTrigger.cs" id="1_sfojx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rku1e"]
+
+[node name="BattleTrigger" type="Node2D"]
+scale = Vector2(8.88, 9.48)
+script = ExtResource("1_sfojx")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_rku1e")
+
+[connection signal="body_entered" from="Area2D" to="." method="OnArea2DBodyEntered"]
+[connection signal="body_exited" from="Area2D" to="." method="OnArea2DBodyExited"]
