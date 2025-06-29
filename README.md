@@ -26,9 +26,6 @@
   
 * _"Folklore Terror"_ to klimatyczna i trzymająca w napięciu gra karciana, która łączy mechanikę strategiczną z mroczną atmosferą ludowych legend i klaustrofobicznym doświadczeniem paraliżu sennego. Czy zdołasz pokonać demony nocy? Czy może ich mroczna obecność stanie się twoją _wieczną rzeczywistością?_
 
-## Grafika Koncepcyjna
-![alt text](https://github.com/patczyzewski/karciana-gra-rpg/blob/main/Folklore%20Terror%20Concept%20Art.png "Folklore Terror Concept Art")
-
 ## Wykorzystany folklor, stwory (lista może ulec zmianie):
 * Banshee
 * Medusa
@@ -285,3 +282,11 @@ classDiagram
     Card ..> GameManager : notifies
     BattleTrigger ..> GameManager : triggers
 ```
+
+## Plany na przyszłość:
+
+* Zaimplementować system zapisu i odczytu.
+* Utworzyć obiekt zarządzający Przeciwnikami i Scenami.
+* Utworzyć obiekt odpowiadający za dźwięk.
+* Stworzyć mechanikę dobierania kart w sposób bardziej schematyczny.
+* Dodać kolejnych przeciwników, sceny, karty.
