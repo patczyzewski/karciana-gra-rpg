@@ -56,124 +56,232 @@
 ### __Wsparcie__: 
 * Gra będzie wspierała jedynie środowisko __Windows__ oraz język __Polski__.
 
+## Paradygmat Obiektowy
+### Struktura
+
+Projekt składa się z wielu klas, które reprezentują różne elementy gry. Najważniejsze z nich to:
+
+* __GameManager__ – centralna klasa zarządzająca logiką gry, posiada referencje do innych kluczowych obiektów (Player, Enemy, CardHand, DialogBox, EnemyHealthBar, CustomSignals).
+
+* __Player__ i __Enemy__ – reprezentują odpowiednio gracza i przeciwnika, przechowują informacje o zdrowiu, statusach i obsługują logikę związaną z obrażeniami.
+
+* __CardHand__ – zarządza kolekcją kart __(Card)__, umożliwia dobieranie, odrzucanie i wybieranie kart.
+
+* __Card__ – pojedyncza karta, powiązana z danymi __(CardData)__, obsługuje interakcje użytkownika.
+
+* __CardData__ – przechowuje dane opisujące kartę (nazwa, efekt, obrażenia itd.).
+
+* __DialogBox__ – obsługuje wyświetlanie komunikatów tekstowych.
+
+* __EnemyHealthBar__ – odpowiada za wizualizację zdrowia przeciwnika.
+
+* __CustomSignals__ – definiuje sygnały (eventy) używane do komunikacji między obiektami.
+
+* __BattleTrigger__ – uruchamia walkę.
+
+* __InputKeys__ – klasa narzędziowa do obsługi wejścia z klawiatury.
+
+### Dziedziczenie
+
+Wiele klas dziedziczy po bazowych klasach Godota, co pozwala im korzystać z funkcjonalności silnika:
+
+* Player dziedziczy po CharacterBody2D.
+
+* Enemy, Card, CardHand, GameManager, DialogBox, EnemyHealthBar, BattleTrigger dziedziczą po Node2D.
+
+* CustomSignals dziedziczy po Node.
+
+### Polimorfizm
+
+Polimorfizm objawia się głównie poprzez nadpisywanie metod odziedziczonych po klasach bazowych Godota:
+
+* Metody takie jak _Ready() i _Process(delta: double) są implementowane w różnych klasach, ale każda z nich może mieć własną, specyficzną logikę działania.
+  
+* Dzięki temu, mimo że wywołanie metody jest takie samo, efekt zależy od konkretnej klasy (np. Player, Enemy, Card).
+
+### Hermetyzacja
+
+* Wiele pól w klasach jest prywatnych (np. - health : int, - cards : List<Card>), a dostęp do nich odbywa się przez metody publiczne (np. TakeDamage(amount: int), DrawCard(cardData: CardData)).
+
+* Klasy takie jak Card czy CardHand udostępniają metody do interakcji z kartami, ale nie pozwalają na bezpośrednią modyfikację wewnętrznych kolekcji z zewnątrz.
+
+* Dzięki temu kod jest bardziej bezpieczny i łatwiejszy w utrzymaniu.
+
+
 ## Diagram UML
 
 ```mermaid
 classDiagram
-%% --- Bazowe klasy Godot ---
-class Node
-class CanvasItem
-CanvasItem --|> Node
-class Control
-Control --|> CanvasItem
-class Texture2D
-class InputEvent
-class InputEventKey
-class InputEventMouseButton
-class Resource
+    %% Godot base classes for context
+    class Node2D
+    class Node
+    class CharacterBody2D
 
-%% --- Komponenty gry ---
-class Player {
-  - Array~Card~ hand
-  - int fearLevel
-  + void draw_card()
-  + void play_card(card: Card, target: Monster)
-  + void increase_fear(amount: int)
-  + int get_fear_level()
-}
+    %% GameManager
+    class GameManager {
+        - player : Player
+        - enemy : Enemy
+        - cardHand : CardHand
+        - dialogBox : DialogBox
+        - enemyHealthBar : EnemyHealthBar
+        - customSignals : CustomSignals
+        - isBattleActive : bool
+        + _Ready()
+        + _Process(delta: double)
+        + StartBattle()
+        + EndBattle()
+        + OnCardPlayed(card: Card)
+        + OnBattleStarted()
+    }
 
-class Card {
-  - String card_name
-  - String description
-  + void use(player: Player, target: Monster)
-}
-Card --|> Resource
+    %% Player
+    class Player {
+        - health : int
+        - maxHealth : int
+        - healthOrbs : AnimatedSprite2D[]
+        - statusIcons : AnimatedSprite2D[]
+        - isAlive : bool
+        + _Ready()
+        + _Process(delta: double)
+        + TakeDamage(amount: int)
+        + Heal(amount: int)
+        + Die()
+        + UpdateHealthUI()
+    }
 
-class SkillCard {
-  - String effect
-  + void use(player: Player, target: Monster)
-}
-SkillCard --|> Card
+    %% Enemy
+    class Enemy {
+        - health : int
+        - maxHealth : int
+        - isAlive : bool
+        + _Ready()
+        + _Process(delta: double)
+        + TakeDamage(amount: int)
+        + Die()
+    }
 
-class Monster {
-  - String monster_name
-  - int health
-  - int attack
-  - String special_ability
-  + void attack_player(player: Player)
-  + void take_damage(damage: int)
-  + int get_health()
-}
+    %% CardHand
+    class CardHand {
+        - cards : List<Card>
+        - maxCards : int
+        + _Ready()
+        + _Process(delta: double)
+        + DrawCard(cardData: CardData)
+        + DiscardCard(card: Card)
+        + AddCard(card: Card)
+        + RemoveCard(card: Card)
+        + GetSelectedCard() : Card
+    }
 
-class MonsterType {
-  <<enumeration>>
-  NOSFERATU
-  BABA_JAGA
-  DRACULA
-}
+    %% Card
+    class Card {
+        - cardData : CardData
+        - _originalPosition : Vector2
+        - _isSelected : bool
+        + CardName : string
+        + CardId : int
+        + Effect : string
+        + Target : string
+        + Damage : int
+        + _Ready()
+        + _Process(delta: double)
+        + SetOriginalPosition(pos: Vector2)
+        + SetCardRegion(region: Rect2)
+        + AnimateHoverEffect()
+        + Play()
+        + OnMouseEntered()
+        + OnMouseExited()
+        + OnCardClicked()
+    }
 
-class CardManager {
-  - Array~Card~ deck
-  - Array~Card~ discard_pile
-  + void shuffle_deck()
-  + Card draw_card()
-  + void discard_card(card: Card)
-}
-CardManager --|> Node
+    %% CardData
+    class CardData {
+        + CardName : string
+        + CardId : int
+        + Effect : string
+        + Target : string
+        + Damage : int
+        + Description : string
+    }
 
-class BattleManager {
-  - Player current_player
-  - Array~Monster~ current_monsters
-  + void start_battle(player: Player, monsters: Array~Monster~)
-  + void player_turn(card: Card, target: Monster)
-  + void monster_turn()
-  + bool is_battle_over()
-}
-BattleManager --|> Node
+    %% DialogBox
+    class DialogBox {
+        - messageQueue : Queue<string>
+        - isVisible : bool
+        + _Ready()
+        + _Process(delta: double)
+        + ShowMessage(msg: string)
+        + Hide()
+        + NextMessage()
+    }
 
-class InterfaceManager {
-  + void display_player_hand(hand: Array~Card~)
-  + void display_monsters(monsters: Array~Monster~)
-  + void display_fear_level(fear_level: int)
-  + void display_battle_log(message: String)
-}
-InterfaceManager --|> Control
+    %% EnemyHealthBar
+    class EnemyHealthBar {
+        - currentHealth : int
+        - maxHealth : int
+        + _Ready()
+        + UpdateHealth(current: int, max: int)
+        + Show()
+        + Hide()
+    }
 
-class InputController {
-  + signal action_triggered(action_name: String)
-  + void _input(event: InputEvent)
-}
-InputController --|> Node
+    %% CustomSignals
+    class CustomSignals {
+        + signal BattleStarted()
+        + signal CardPlayed(card: Card)
+        + signal PlayerDied()
+        + signal EnemyDied()
+    }
 
-class GameAction {
-  <<enumeration>>
-  PLAY_CARD
-  SELECT_TARGET
-  END_TURN
-}
+    %% BattleTrigger
+    class BattleTrigger {
+        + _Ready()
+        + TriggerBattle()
+    }
 
-class GraphicsManager {
-  + Texture2D load_card_texture(card: Card)
-  + Texture2D load_monster_texture(monster: Monster)
-  + void draw_card(card: Card, position: Vector2)
-  + void draw_monster(monster: Monster, position: Vector2)
-  + void draw_ui(interface_manager: InterfaceManager, player: Player, battle_manager: BattleManager)
-}
-GraphicsManager --|> Node
+    %% InputKeys
+    class InputKeys {
+        + static GetKey(keyName: string) : int
+    }
 
-%% --- Relacje pomiędzy klasami ---
-Player --* Card : posiada
-CardManager --* Card : zarządza
-BattleManager --* Player : zarządza
-BattleManager --* Monster : zarządza
-BattleManager --> CardManager : używa
-InterfaceManager --> Player : wyświetla informacje o
-InterfaceManager --> BattleManager : wyświetla informacje o
-InputController --> GameAction : emituje
-GraphicsManager --> Card : renderuje
-GraphicsManager --> Monster : renderuje
-GraphicsManager --> InterfaceManager : renderuje
-Player "1" --> "1..*" BattleManager : uczestniczy w
-Monster "1..*" --> "1" BattleManager : uczestniczy w
-Monster --> MonsterType
+    %% Additional/utility classes
+    class AnimatedSprite2D
+
+    %% Inheritance
+    Player --|> CharacterBody2D
+    Enemy --|> Node2D
+    Card --|> Node2D
+    CardHand --|> Node2D
+    GameManager --|> Node2D
+    DialogBox --|> Node2D
+    EnemyHealthBar --|> Node2D
+    CustomSignals --|> Node
+    BattleTrigger --|> Node2D
+
+    %% Composition/Association
+    Player o-- InputKeys
+    GameManager o-- Player
+    GameManager o-- Enemy
+    GameManager o-- CardHand
+    GameManager o-- DialogBox
+    GameManager o-- EnemyHealthBar
+    GameManager o-- CustomSignals
+
+    CardHand o-- "*" Card
+    Card *-- CardData
+
+    Player o-- "*" AnimatedSprite2D : healthOrbs
+    Player o-- "*" AnimatedSprite2D : statusIcons
+
+    CardHand o-- Card
+    EnemyHealthBar o-- Enemy
+
+    %% Signal/Event usage (dependencies)
+    CustomSignals ..> GameManager : emits/connected
+    CustomSignals ..> Card : emits/connected
+    CustomSignals ..> Player : emits/connected
+    CustomSignals ..> Enemy : emits/connected
+    Card ..> CardHand : notifies
+    Card ..> GameManager : notifies
+    BattleTrigger ..> GameManager : triggers
 ```
