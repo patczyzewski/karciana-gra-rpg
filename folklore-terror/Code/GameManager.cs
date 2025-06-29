@@ -7,6 +7,12 @@ public partial class GameManager : Node2D
 	[Export] public Node2D BattleTrigger;
 	[Export] public DialogBox GameDialogBox;
 	[Export] public CardHand GameCardHand;
+	[Export] public Camera2D GameCamera;
+	
+	public float cameraMoveDistance = 70.0f; 
+	public float cameraMoveDuration = 1.0f; 
+	private Vector2 _initialCameraPosition;
+	private Tween _currentCameraTween;
 	
 	private CustomSignals _customSignal;
 	
@@ -33,7 +39,6 @@ public partial class GameManager : Node2D
 	[Export] public Enemy Enemy;
 	[Export] public EnemyHealthBar EnemyHealth;
 	
-	public string enemyStatus;
 	public bool isEnemyConfused = false;
 	
 	public int enemyDefenseBuff = 0;
@@ -49,7 +54,32 @@ public partial class GameManager : Node2D
 	}
 	public override void _Process(double delta)
 	{
+		 
 		Battle();
+	}
+	
+	private void MoveCameraAndReturn(bool moveRight)
+	{
+		// Jeśli jest już aktywny tween, zatrzymaj go
+		if (_currentCameraTween != null && _currentCameraTween.IsRunning())
+		{
+			_currentCameraTween.Kill();
+		}
+
+		_currentCameraTween = GetTree().CreateTween();
+		
+		
+		// Przesuń kamerę w prawo
+		if (moveRight == true)
+			_currentCameraTween.TweenProperty(GameCamera, "position", _initialCameraPosition + new Vector2(cameraMoveDistance, 0), cameraMoveDuration)
+				.SetTrans(Tween.TransitionType.Quad)
+				.SetEase(Tween.EaseType.Out);
+
+		// Po zakończeniu ruchu w prawo, wróć do pozycji początkowej
+		if (moveRight == false)
+			_currentCameraTween.TweenProperty(GameCamera, "position", _initialCameraPosition, cameraMoveDuration)
+				.SetTrans(Tween.TransitionType.Quad)
+				.SetEase(Tween.EaseType.In);
 	}
 	
 	public void Battle()
@@ -66,6 +96,7 @@ public partial class GameManager : Node2D
 		if (GameDialogBox.Visible == false && EnemyHealth.numOfLives == 0 && _gameEnded == false)
 		{
 			_gameEnded = true;
+			MoveCameraAndReturn(false);
 			ChangeTurns();
 		}
 			
@@ -132,7 +163,7 @@ public partial class GameManager : Node2D
 		{
 			_gameStarted = true;
 			playerTurn = false;
-
+			
 			Player.HideLives(false);
 			GameCardHand.Visible = true;
 			EnemyHealth.Visible = true;
@@ -167,6 +198,7 @@ public partial class GameManager : Node2D
 		if (EnemyHealth.numOfLives > 0)
 		{
 			Player.LockMovement = true;
+			MoveCameraAndReturn(true);
 			DisplayText("startBattle");
 		}
 		
@@ -182,52 +214,46 @@ public partial class GameManager : Node2D
 		
 		_dialogActive = true; // dialog się rozpoczął
 		
-		if (type == "card")
+		switch (type)
 		{
-			await GameDialogBox.ShowDialog(GameCardHand.cardData.Find(p => p.Name == GameCardHand.chosenCard.CardName).Description); 
-			ChangeTurns();
-		}
-			
-		if (type == "enemy")
-		{
-			Health("player", -1);
-			Player.PlayEffect("slash");
-			await GameDialogBox.ShowDialog(new string[]{"Przeciwnik ostrzy swoje pazury...", "Czujesz strach."}); 
-			ChangeTurns();
-		}
-		if (type == "win")
-		{
-			await GameDialogBox.ShowDialog(new string[]{"Wygrales."}); 
-		}
-		if (type == "lose")
-		{
-			await GameDialogBox.ShowDialog(new string[]{"Przegrales."}); 
-		}
-		if (type == "startBattle")
-		{
-			await GameDialogBox.ShowDialog(new string[]{"Widzisz cos, co mrozi Ci krew w zylach...",
-			"W ciemnosci wylania sie para krwawych oczu",
-			"Nogi lamia ci sie pod ciezarem strachu...",
-			"Nie dasz rady uciec...",
-			"Musisz walczyc."});
-			GameCardHand._areCardsHidden = false;
-			ChangeTurns();
-		}
-		if (type == "enemyIsConfused")
-		{
-			playerTurn = false;
-			enemyConfusedTurns--;
-			await GameDialogBox.ShowDialog(new string[]{"Przeciwnik jest zdezorientowany!"});
-			ChangeTurns();
-		}
-		if (type == "enemyIsNotConfused")
-		{
-			playerTurn = false;
-			enemyConfusedTurns = -1;
-			Status("enemy", "none");
-			await GameDialogBox.ShowDialog(new string[]{"Przeciwnik nie jest juz dluzej zdezorientowany!"});
-			
-			ChangeTurns();
+			case ("card"):
+				await GameDialogBox.ShowDialog(GameCardHand.cardData.Find(p => p.Name == GameCardHand.chosenCard.CardName).Description); 
+				ChangeTurns();
+				break;
+			case ("enemy"):
+				Health("player", -1);
+				Player.PlayEffect("slash");
+				await GameDialogBox.ShowDialog(new string[]{"Przeciwnik ostrzy swoje pazury...", "Czujesz strach."}); 
+				ChangeTurns();
+				break;
+			case ("win"):
+				await GameDialogBox.ShowDialog(new string[]{"Wygrana."}); 
+				break;
+			case ("lose"):
+				await GameDialogBox.ShowDialog(new string[]{"Przegrana."}); 
+				break;
+			case ("startBattle"):
+				await GameDialogBox.ShowDialog(new string[]{"Widzisz cos, co mrozi Ci krew w zylach...",
+				"W ciemnosci wylania sie para krwawych oczu",
+				"Nogi lamia ci sie pod ciezarem strachu...",
+				"Nie dasz rady uciec...",
+				"Musisz walczyc."});
+				GameCardHand._areCardsHidden = false;
+				ChangeTurns();
+				break;
+			case ("enemyIsConfused"):
+				playerTurn = false;
+				enemyConfusedTurns--;
+				await GameDialogBox.ShowDialog(new string[]{"Przeciwnik jest zdezorientowany!"});
+				ChangeTurns();
+				break;
+			case ("enemyIsNotConfused"):
+				playerTurn = false;
+				enemyConfusedTurns = -1;
+				Status("enemy", "none");
+				await GameDialogBox.ShowDialog(new string[]{"Przeciwnik nie jest juz dluzej zdezorientowany!"});
+				ChangeTurns();
+				break;
 		}
 	}
 	

@@ -21,7 +21,7 @@ public partial class Player : CharacterBody2D
 	private Vector2 _velocity = Vector2.Zero;
 	
 	private int currentIndex = -1;
-	private int currentIndexTimer = 10;
+	private double currentIndexTimer = 10;
 
 	public override void _Ready()
 	{
@@ -102,7 +102,7 @@ public partial class Player : CharacterBody2D
 			currentIndexTimer = 10;
 		}
 		
-		currentIndexTimer--;
+		currentIndexTimer-=delta*100;
 		
 	
 		// Przesuń ciało
