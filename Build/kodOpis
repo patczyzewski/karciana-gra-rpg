@@ -1,0 +1,94 @@
+Kod:
+
+GameManager
+-> void _Ready()
+-> void _Process(double delta)
+-> void _Input(InputEvent @event)
+
+-> void Battle()
+-> void PlayerTurn()
+-> void EnemyTurn()
+-> void ChangeTurns()
+
+-> void PlayerEntered(bool isGameStarted)
+
+-> void DisplayText(string type)
+-> void Status(string target, string status)
+-> void Health(string target, int health)
+
+Card
+-> void _Ready()
+-> void SetOriginalPosition(Vector2 pos)
+-> void SetCardRegion(Texture2D atlasTexture, Rect2 regionRect)
+
+-> void OnCardAreaMouseEntered()
+-> void OnCardAreaMouseExited()
+
+-> void OnAreaInputEvent(Node viewport, InputEvent @event, long shapeIdx)
+-> void AnimateHoverEffect(bool enter)
+
+-> float GetCardWidth()
+
+CardHand
+-> void _Ready()
+-> void _Process(double delta) 
+
+-> void HideCards()
+-> void AddCard(string cardName)
+-> void RemoveCard(int cardId)
+-> void ArrangeCards()
+
+-> void OnCardMouseEntered(Card card)
+-> void OnCardMouseExited(Card card)
+-> void OnCardClicked(Card card)
+-> void OnHideTimerTimeout()
+-> void AnimateCardsVertical(bool hide)
+-> void SetCardsInteractive(bool interactive)
+-> void ResetHoverState()
+
+ObjectTypes
+[] class CardData
+
+Player
+-> void _Ready()
+-> void _Process(double delta)
+
+-> void PlayEffect(string effect)
+-> void HideLives(bool hideLives)
+-> void ChangeStatus(string status)
+-> void CalculateLives(int changeNumOfLives)
+
+Enemy
+-> void _Ready()
+
+-> void PlayEffect(string effect)
+-> void ChangeStatus(string status)
+
+EnemyHealthBar
+-> void _Ready()
+
+-> void SetEnemyName(string enemyName)
+-> void CalculateLives(int changeNumOfLives)
+
+InputKeys
+[] class InputKeys
+
+DialogBox
+-> void _Ready()
+-> void _Process(double delta)
+
+-> async Task ShowDialog(string[] lines, float? speed = null, Color? color = null)
+-> void GoToNextLine()
+-> void DisplayNextLine()
+-> void SkipTyping()
+-> void HideDialog()
+
+BattleTrigger
+-> void _Ready()
+-> void _Process(double delta)
+
+-> void OnArea2DBodyEntered(Player body)
+-> void OnArea2DBodyExited(Player body)
+
+CustomSignals
+[] class CustomSignals : Node
