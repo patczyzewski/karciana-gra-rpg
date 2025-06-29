@@ -53,6 +53,21 @@
 ### __Wsparcie__: 
 * Gra będzie wspierała jedynie środowisko __Windows__ oraz język __Polski__.
 
+## Czym jest silnik Godot Engine?
+
+Godot Engine to dynamicznie rozwijający się silnik, który oferuje kompleksowe narzędzia do tworzenia gier bez żadnych kosztów licencyjnych. Jego otwartość, elastyczność i aktywna społeczność sprawiają, że jest to atrakcyjny wybór dla każdego, kto chce tworzyć gry, niezależnie od poziomu zaawansowania.
+
+* Otwartoźródłowy i darmowy: Godot jest dostępny na licencji MIT, co oznacza, że jest całkowicie darmowy do użytku komercyjnego i niekomercyjnego. Nie ma żadnych ukrytych opłat ani tantiem od sprzedaży gier. Kod źródłowy jest publicznie dostępny, co pozwala na jego modyfikację i rozwijanie przez społeczność.
+
+* System scen i węzłów: Godot opiera się na unikalnej architekturze scen i węzłów. Każdy element gry (postać, obiekt, dźwięk, interfejs użytkownika) jest węzłem, który może być grupowany w sceny. Sceny mogą być zagnieżdżane i ponownie używane, co ułatwia organizację projektu i tworzenie złożonych struktur.
+
+* Wbudowane języki skryptowe: Głównym językiem skryptowym Godot jest GDScript, który jest językiem o składni zbliżonej do Pythona, zaprojektowanym specjalnie do pracy z silnikiem Godot. Jest łatwy do nauki i bardzo efektywny. Oprócz GDScript, Godot obsługuje również C# (dla bardziej zaawansowanych projektów i deweloperów Unity/Unreal) oraz C++ (przez GDExtension, dla najwyższej wydajności).
+
+* Potężne narzędzia do 2D: Godot słynie z doskonałych narzędzi do tworzenia gier 2D. Oferuje m.in. edytor kafelków (tilemap editor), system animacji, wykrywanie kolizji 2D oraz system cząsteczek.
+
+* Wsparcie społeczności: Godot ma bardzo aktywną i rosnącą społeczność. Dostępne są liczne tutoriale, dokumentacja, fora i grupy dyskusyjne, gdzie można znaleźć pomoc i dzielić się wiedzą.
+
+
 ## Paradygmat Obiektowy
 ### Struktura
 
