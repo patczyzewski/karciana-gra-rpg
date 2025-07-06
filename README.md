@@ -12,6 +12,8 @@
 ## Fabuła
 * Leżysz bezwładnie w łóżku, ciężki sen ustępuje miejsca _paraliżującemu strachowi_. Powieki są zbyt __ciężkie__, by je podnieść, a ciało odmawia posłuszeństwa. To __paraliż senny__. Ale tej nocy nie jesteś _sam_. Z mroku wyłaniają się __koszmarne zjawy__, czerpiące swą moc z najmroczniejszych zakamarków __ludowej wyobraźni__. _Nosferatu_ o przeszywającym spojrzeniu, _Baba Jaga_ z jej kościstą dłonią, _Drakula_ z jego hipnotycznym urokiem – te i inne monstra zbliżają się, a jedyną twoją bronią są przebłyski świadomości i resztki woli, ucieleśnione w postaci __kart umiejętności__.
 
+![alt text](https://github.com/patczyzewski/karciana-gra-rpg/blob/main/Build/folkloreterror-5.jpg "Folklore Terror Concept Art")
+
 ## Rozgrywka
 * W _"Folklore Terror"_ każda runda reprezentuje __narastający atak koszmaru__. Na początku każdej rundy __losujesz karty stworów__, które będą cię nękać. Każdy stwór posiada unikalne statystyki i zdolności specjalne, od wysysania energii po paraliżowanie twoich zmysłów.
 * Twoją jedyną linią obrony jest _talia kart umiejętności_. __Karty__ te reprezentują różne __aspekty twojej psychiki__ i __przebłyski świadomości__, które możesz wykorzystać, by odeprzeć atak. Znajdziesz wśród nich karty takie jak:
@@ -23,6 +25,8 @@
 * W swojej turze zagrywasz __karty umiejętności__, starając się zneutralizować zagrożenie ze strony nadciągających _monstrów_. Musisz strategicznie zarządzać swoimi __zasobami__ i przewidywać ruchy wrogów. Niektóre karty mogą być __bardziej efektywne__ przeciwko konkretnym __typom potworów__. Na przykład, _"Światło Księżyca"_ może osłabić __Nosferatu__, a _"Zioła Ochronne"_ mogą zdezorientować __Babę Jagę__.
 * Jeśli nie uda ci się odeprzeć wszystkich atakujących stworów, ich obecność zwiększy poziom twojego __strachu__. Jeśli poziom strachu osiągnie _krytyczny punkt_, koszmar cię pochłonie i __przegrywasz__.
 * Gra oferuje różne poziomy trudności, wprowadzając coraz bardziej złożone kombinacje potworów i ograniczając twoje zasoby. Możesz także odblokowywać nowe karty umiejętności w miarę postępów, odkrywając nowe sposoby na walkę z nocnymi marami.
+
+![alt text](https://github.com/patczyzewski/karciana-gra-rpg/blob/main/Build/folkloreterror-3.jpg "Folklore Terror Concept Art")
   
 * _"Folklore Terror"_ to klimatyczna i trzymająca w napięciu gra karciana, która łączy mechanikę strategiczną z mroczną atmosferą ludowych legend i klaustrofobicznym doświadczeniem paraliżu sennego. Czy zdołasz pokonać demony nocy? Czy może ich mroczna obecność stanie się twoją _wieczną rzeczywistością?_
 
@@ -39,6 +43,8 @@
 * Manticore
 * Wendigo
 * Skinwalker
+
+![alt text](https://github.com/patczyzewski/karciana-gra-rpg/blob/main/Build/folkloreterror-4.jpg "Folklore Terror Concept Art")
 
 ## Technologie
 ### __Silnik Gry__: 
